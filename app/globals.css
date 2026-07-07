@@ -153,6 +153,72 @@
    Base element styles
    ============================================================ */
 
+html,
+body {
+  /* Cegah horizontal scroll di layar kecil (mis. dari offset animasi Reveal).
+     Pakai clip agar tidak merusak position: sticky. */
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Seleksi teks bernuansa brand */
+::selection {
+  background: var(--secondary-200);
+  color: var(--color-tertiary);
+}
+
+/* --- Micro-interaction keyframes --- */
+
+/* Kilau menyapu dari kiri ke kanan (untuk tombol/kartu premium) */
+@keyframes shine-sweep {
+  from { transform: translateX(-150%) skewX(-18deg); }
+  to { transform: translateX(350%) skewX(-18deg); }
+}
+
+/* Mengambang pelan naik-turun (untuk badge dekoratif) */
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float-soft {
+  animation: float-soft 4s ease-in-out infinite;
+}
+
+/* Elemen kilau: taruh di dalam container overflow-hidden bersama .group */
+.shine-el {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 80%
+  );
+  transform: translateX(-150%) skewX(-18deg);
+  pointer-events: none;
+}
+
+.group:hover .shine-el {
+  animation: shine-sweep 0.9s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-float-soft,
+  .group:hover .shine-el {
+    animation: none;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

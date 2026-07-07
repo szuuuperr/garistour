@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import Image from 'next/image';
+import { AnimatePresence, motion } from 'framer-motion';
 import TornPaper from '@/components/blocks/torn-paper';
 import DestinationFeatureCard from '@/components/blocks/destination-feature-card';
 import DestinationCard from '@/components/blocks/destination-card';
@@ -10,6 +11,7 @@ import Reveal from '@/components/blocks/reveal';
 const features = [
   {
     title: 'Utamakan Keselamatan',
+    description: 'Armada terawat dan pengemudi berpengalaman untuk perjalanan yang aman.',
     icon: (
       <svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' xmlns='http://www.w3.org/2000/svg'>
         <path d='M12 2 4 5v6c0 5 3.4 7.8 8 10 4.6-2.2 8-5 8-10V5l-8-3Z' />
@@ -19,6 +21,7 @@ const features = [
   },
   {
     title: 'Trip Eksklusif',
+    description: 'Rute pilihan dan pengalaman autentik yang dirancang khusus untuk Anda.',
     icon: (
       <svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' xmlns='http://www.w3.org/2000/svg'>
         <path d='m12 3 2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9 6.8 19.6l1-5.8L3.6 9.1l5.8-.8Z' />
@@ -27,6 +30,7 @@ const features = [
   },
   {
     title: 'Pemandu Profesional',
+    description: 'Dipandu tim ramah yang paham setiap sudut menarik destinasi.',
     icon: (
       <svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' xmlns='http://www.w3.org/2000/svg'>
         <circle cx='12' cy='8' r='4' />
@@ -36,6 +40,7 @@ const features = [
   },
   {
     title: 'Kuliner Terbaik',
+    description: 'Cicipi hidangan khas dan kuliner lokal terbaik di setiap perhentian.',
     icon: (
       <svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' xmlns='http://www.w3.org/2000/svg'>
         <path d='M4 3v7a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V3M6 3v18' />
@@ -90,7 +95,7 @@ const PopularSection = () => {
   };
 
   return (
-    <section id='wisata-populer' className='relative bg-background'>
+    <section id='wisata-populer' className='relative bg-secondary-400'>
       {/* Torn paper: top edge (rip + shadow point inward) */}
       <div className='pointer-events-none absolute inset-x-0 top-0 z-20 h-10'>
         <TornPaper position='top' className='h-10' />
@@ -123,10 +128,10 @@ const PopularSection = () => {
 
           <Reveal from='bottom'>
           <h2 className='font-heading text-4xl tracking-wide md:text-5xl'>
-            <span className='text-secondary italic'>Wisata</span>{' '}
-            <span className='text-primary'>Populer</span>
+            <span className='text-background italic'>Wisata</span>{' '}
+            <span className='text-tertiary'>Populer</span>
           </h2>
-          <p className='mt-4 max-w-md font-body text-sm leading-relaxed text-neutral-600'>
+          <p className='mt-4 max-w-md font-body text-sm leading-relaxed text-tertiary/80'>
             Destinasi pilihan yang paling diminati wisatawan. Nikmati pengalaman
             autentik, pemandangan menakjubkan, dan pelayanan ramah di setiap
             perjalanan bersama Garis Tour.
@@ -140,6 +145,7 @@ const PopularSection = () => {
               <DestinationFeatureCard
                 number={i + 1}
                 title={f.title}
+                description={f.description}
                 icon={f.icon}
               />
               </Reveal>
@@ -152,27 +158,45 @@ const PopularSection = () => {
               <button
                 key={f}
                 onClick={() => handleFilter(f)}
-                className={`rounded-full px-4 py-1.5 font-body text-sm font-medium transition-colors ${
+                className={`relative rounded-full px-4 py-1.5 font-body text-sm font-medium transition-colors ${
                   activeFilter === f
-                    ? 'bg-primary text-background'
-                    : 'border border-neutral-300 text-tertiary hover:border-primary hover:text-primary'
+                    ? 'text-background'
+                    : 'bg-background/40 text-tertiary hover:bg-background/70'
                 }`}
               >
-                {f}
+                {/* Pil aktif yang meluncur antar tab */}
+                {activeFilter === f && (
+                  <motion.span
+                    layoutId='filter-pill'
+                    transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                    className='absolute inset-0 rounded-full bg-tertiary shadow-sm'
+                  />
+                )}
+                <span className='relative z-10'>{f}</span>
               </button>
             ))}
           </Reveal>
 
           {/* Destination cards */}
           <Reveal from='bottom' delay={0.15} className='mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2'>
-            {visible.map((d) => (
-              <DestinationCard
-                key={d.name}
-                name={d.name}
-                image={d.image}
-                category={d.category}
-              />
-            ))}
+            <AnimatePresence mode='popLayout'>
+              {visible.map((d, i) => (
+                <motion.div
+                  key={d.name}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9, y: 16 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9, y: -16 }}
+                  transition={{ type: 'spring', stiffness: 320, damping: 28, delay: i * 0.05 }}
+                >
+                  <DestinationCard
+                    name={d.name}
+                    image={d.image}
+                    category={d.category}
+                  />
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </Reveal>
         </div>
 
@@ -186,8 +210,8 @@ const PopularSection = () => {
                 aria-label={`Halaman ${i + 1}`}
                 className={`h-3 rounded-full transition-all ${
                   page === i
-                    ? 'w-7 bg-secondary'
-                    : 'w-3 bg-neutral-300 hover:bg-secondary-300'
+                    ? 'w-7 bg-tertiary'
+                    : 'w-3 bg-tertiary/25 hover:bg-tertiary/50'
                 }`}
               />
             ))}

@@ -7,6 +7,7 @@ import GaleriCustomerSection from "@/sections/galeri-customer-section";
 import TestimoniSection from "@/sections/testimoni-section";
 import KirimSection from "@/sections/kirim-section";
 import Footer from "@/sections/footer";
+import WhatsAppFab from "@/components/blocks/whatsapp-fab";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
         <KirimSection />
       </main>
       <Footer />
+      <WhatsAppFab />
     </>
   );
 }

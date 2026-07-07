@@ -1,5 +1,5 @@
 const PromoBanner = () => (
-  <div className='relative overflow-hidden rounded-3xl bg-secondary px-8 py-9 shadow-lg md:px-12 md:py-10'>
+  <div className='group relative overflow-hidden rounded-3xl bg-secondary px-8 py-9 shadow-lg transition-shadow duration-300 hover:shadow-2xl hover:shadow-secondary/40 md:px-12 md:py-10'>
     {/* Decorative wave/cloud pattern at the bottom */}
     <svg
       className='pointer-events-none absolute inset-x-0 bottom-0 h-16 w-full text-secondary-400'
@@ -14,7 +14,7 @@ const PromoBanner = () => (
 
     <div className='relative z-10 flex flex-col items-center gap-6 text-center md:flex-row md:justify-between md:text-left'>
       <div className='flex items-center gap-5'>
-        <div className='leading-none'>
+        <div className='leading-none transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-2'>
           <span className='font-heading text-6xl tracking-wide text-tertiary md:text-7xl'>
             48
           </span>
@@ -34,9 +34,25 @@ const PromoBanner = () => (
 
       <a
         href='#kontak'
-        className='shrink-0 rounded-full bg-background px-8 py-3.5 font-body font-semibold text-primary shadow-md transition-colors hover:bg-neutral-100'
+        className='group/cta relative shrink-0 overflow-hidden rounded-full bg-background px-8 py-3.5 font-body font-semibold text-primary shadow-md transition-all duration-300 hover:bg-neutral-100 hover:shadow-lg active:scale-95'
       >
-        Selengkapnya
+        <span className='relative z-10 inline-flex items-center gap-1.5'>
+          Selengkapnya
+          <svg
+            width='15'
+            height='15'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            strokeWidth='2.5'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            className='transition-transform duration-300 group-hover/cta:translate-x-1'
+            aria-hidden
+          >
+            <path d='M5 12h14M12 5l7 7-7 7' />
+          </svg>
+        </span>
       </a>
     </div>
   </div>

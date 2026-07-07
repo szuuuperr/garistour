@@ -1,5 +1,7 @@
 interface TornPaperProps {
   position?: 'top' | 'bottom';
+  /** Warna permukaan kertas. Cocokkan dengan warna section sebelumnya. */
+  color?: 'background' | 'secondary';
   className?: string;
 }
 
@@ -22,10 +24,16 @@ const TEETH_UP =
   'L1138,26 L1165,9 L1195,20 L1220,5 L1258,23 L1285,12 L1315,25 L1342,8 L1378,18 ' +
   'L1405,13 L1440,20 L1440,40 Z';
 
-const TornPaper = ({ position = 'top', className = '' }: TornPaperProps) => {
+const TornPaper = ({
+  position = 'top',
+  color = 'background',
+  className = '',
+}: TornPaperProps) => {
   const isTop = position === 'top';
   const path = isTop ? TEETH_DOWN : TEETH_UP;
   const fiberShift = isTop ? 1.5 : -1.5;
+  const surfaceFill = color === 'secondary' ? 'fill-secondary-400' : 'fill-background';
+  const fiberFill = color === 'secondary' ? 'fill-secondary-600' : 'fill-neutral-200';
 
   return (
     <svg
@@ -43,11 +51,11 @@ const TornPaper = ({ position = 'top', className = '' }: TornPaperProps) => {
       {/* soft fiber line just inside the rip */}
       <path
         d={path}
-        className='fill-neutral-200'
+        className={fiberFill}
         transform={`translate(0,${fiberShift})`}
       />
       {/* paper surface */}
-      <path d={path} className='fill-background' />
+      <path d={path} className={surfaceFill} />
     </svg>
   );
 };

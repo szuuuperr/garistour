@@ -26,12 +26,14 @@ const PricingCard = ({
   featured = false,
 }: PricingCardProps) => (
   <div
-    className={`relative flex h-full flex-col rounded-3xl bg-background p-4 shadow-lg transition-transform hover:-translate-y-1 ${
-      featured ? 'ring-2 ring-secondary lg:-translate-y-4' : 'ring-1 ring-neutral-100'
+    className={`group relative flex h-full flex-col rounded-3xl bg-background p-4 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl ${
+      featured
+        ? 'ring-2 ring-secondary hover:shadow-secondary/25 lg:-translate-y-4 lg:hover:-translate-y-6'
+        : 'ring-1 ring-neutral-100 hover:ring-secondary-200'
     }`}
   >
     {featured && (
-      <span className='absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-secondary px-4 py-1 font-body text-xs font-semibold text-tertiary shadow-sm'>
+      <span className='absolute -top-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-secondary px-4 py-1 font-body text-xs font-semibold text-tertiary shadow-sm transition-transform duration-300 group-hover:scale-110'>
         Terpopuler
       </span>
     )}
@@ -42,8 +44,10 @@ const PricingCard = ({
         alt={title}
         fill
         sizes='(max-width: 768px) 100vw, 320px'
-        className='object-contain'
+        className='object-contain transition-transform duration-500 ease-out group-hover:scale-[1.04]'
       />
+      {/* Kilau menyapu poster saat hover */}
+      <span className='shine-el' aria-hidden />
     </div>
 
     <div className='mt-4 flex items-start justify-between px-1'>
@@ -62,7 +66,7 @@ const PricingCard = ({
       {features.map((f) => (
         <li
           key={f}
-          className='flex items-center gap-2.5 font-body text-sm text-neutral-600'
+          className='flex items-center gap-2.5 font-body text-sm text-neutral-600 transition-transform duration-200 hover:translate-x-1'
         >
           <CheckIcon />
           {f}
@@ -70,8 +74,24 @@ const PricingCard = ({
       ))}
     </ul>
 
-    <button className='mt-auto w-full rounded-full bg-secondary py-3 font-body font-semibold text-tertiary shadow-md transition-colors hover:bg-secondary-600'>
-      Pesan Sekarang
+    <button className='group/btn relative mt-auto w-full overflow-hidden rounded-full bg-secondary py-3 font-body font-semibold text-tertiary shadow-md transition-all duration-300 hover:bg-secondary-600 hover:shadow-lg active:scale-[0.97]'>
+      <span className='relative z-10 inline-flex items-center gap-1.5'>
+        Pesan Sekarang
+        <svg
+          width='15'
+          height='15'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='2.5'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+          className='-mr-1 w-0 opacity-0 transition-all duration-300 group-hover/btn:w-[15px] group-hover/btn:opacity-100'
+          aria-hidden
+        >
+          <path d='M5 12h14M12 5l7 7-7 7' />
+        </svg>
+      </span>
     </button>
   </div>
 );

@@ -90,18 +90,42 @@ const TestimonialShowcase = ({ testimonials }: TestimonialShowcaseProps) => {
         {/* Thumbnails */}
         <div className='relative z-10 flex flex-col gap-3'>
           {testimonials.map((t, i) => (
-            <button
+            <motion.button
               key={t.name}
               onClick={() => setActive(i)}
               aria-label={`Pilih ${t.name}`}
-              className={`relative h-14 w-14 overflow-hidden rounded-2xl ring-2 transition-all ${
+              aria-pressed={active === i}
+              animate={{ scale: active === i ? 1.1 : 1 }}
+              whileHover={{ scale: 1.18 }}
+              whileTap={{ scale: 0.92 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+              className={`group/thumb relative h-14 w-14 cursor-pointer overflow-hidden rounded-2xl ring-2 transition-[opacity,box-shadow] duration-300 ${
                 active === i
-                  ? 'scale-110 ring-secondary'
-                  : 'opacity-70 ring-transparent hover:opacity-100'
+                  ? 'ring-secondary shadow-lg shadow-secondary/30'
+                  : 'opacity-70 ring-transparent hover:opacity-100 hover:ring-secondary-300 hover:shadow-md'
               }`}
             >
               <Image src={t.image} alt={t.name} fill sizes='56px' className='object-cover' />
-            </button>
+
+              {/* Hover overlay hint: signals the thumbnail is clickable */}
+              <span className='pointer-events-none absolute inset-0 flex items-center justify-center bg-tertiary/35 opacity-0 backdrop-blur-[1px] transition-opacity duration-200 group-hover/thumb:opacity-100'>
+                <svg width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='#fff' strokeWidth='2.2' strokeLinecap='round' strokeLinejoin='round' xmlns='http://www.w3.org/2000/svg' aria-hidden>
+                  <path d='M9 11a4 4 0 1 1 5.66 3.63L12 20l-2.66-5.37A4 4 0 0 1 9 11Z' />
+                  <path d='M12 7v4' />
+                </svg>
+              </span>
+
+              {/* Attention pulse on the active thumbnail */}
+              {active === i && (
+                <motion.span
+                  className='pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-secondary'
+                  initial={{ opacity: 0.6, scale: 1 }}
+                  animate={{ opacity: 0, scale: 1.35 }}
+                  transition={{ duration: 1.4, repeat: Infinity, ease: 'easeOut' }}
+                  aria-hidden
+                />
+              )}
+            </motion.button>
           ))}
         </div>
 

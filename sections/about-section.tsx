@@ -94,9 +94,23 @@ const AboutSection = () => (
           <div className='mt-8 flex flex-wrap items-center gap-6'>
             <a
               href='#paket-wisata'
-              className='rounded-full bg-secondary px-7 py-3.5 font-body font-semibold text-tertiary shadow-md transition-colors hover:bg-secondary-600'
+              className='group inline-flex items-center gap-1.5 rounded-full bg-secondary px-7 py-3.5 font-body font-semibold text-tertiary shadow-md transition-all duration-300 hover:bg-secondary-600 hover:shadow-lg active:scale-95'
             >
               Selengkapnya
+              <svg
+                width='15'
+                height='15'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2.5'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                className='transition-transform duration-300 group-hover:translate-x-1'
+                aria-hidden
+              >
+                <path d='M5 12h14M12 5l7 7-7 7' />
+              </svg>
             </a>
 
             <div className='flex items-center gap-3'>
@@ -120,7 +134,7 @@ const AboutSection = () => (
                   Hubungi Kami
                 </p>
                 <p className='font-body text-sm font-semibold text-primary'>
-                  +62 812 3456 7890
+                  +62 817 0201 984
                 </p>
               </div>
             </div>

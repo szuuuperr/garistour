@@ -7,10 +7,10 @@ import AboutSection from '@/sections/about-section';
 const heroMedia = {
   mediaType: 'image' as const,
   src: '/assets/pantai-nglambor.jpg',
-  background: '/assets/destination/hutan-pinus-mangunan.webp',
+  background: '/assets/destination/embung-nglanggeran.webp',
   title: 'Jelajah Istimewa',
   date: 'Garis Tour & Travel',
-  scrollToExpand: 'Gulir untuk mulai menjelajah',
+  scrollToExpand: 'Swipe Up',
   about: {
     overview:
       'Garis Tour adalah penyedia jasa transportasi dan perjalanan wisata yang melayani kebutuhan perjalanan dengan pelayanan profesional, aman, nyaman, dan terpercaya. Kami menyediakan armada yang bersih dan terawat serta didukung pengemudi berpengalaman untuk berbagai keperluan perjalanan.',

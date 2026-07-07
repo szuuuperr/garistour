@@ -52,7 +52,7 @@ const PricingSection = () => (
     {/* Background photo */}
     <div className="absolute inset-0 z-0">
       <Image
-        src="/assets/destination/gunung-merapi.webp"
+        src="/assets/destination/pantai-indrayanti.webp"
         alt=""
         fill
         sizes="100vw"
@@ -61,9 +61,9 @@ const PricingSection = () => (
       <div className="absolute inset-0" />
     </div>
 
-    {/* Torn paper: top edge */}
+    {/* Torn paper: top edge (secondary, menyambung section Wisata Populer di atasnya) */}
     <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-10">
-      <TornPaper position="top" className="h-10" />
+      <TornPaper position="top" color="secondary" className="h-10" />
     </div>
 
     {/* Content */}
@@ -101,7 +101,7 @@ const PricingSection = () => (
       </Reveal>
     </div>
 
-    <button className="w-full rounded-full border border-secondary bg-transparent py-3 font-body font-semibold text-secondary transition-colors hover:bg-secondary/10">
+    <button className="w-full rounded-full border border-neutral-100 bg-transparent py-3 font-body font-semibold text-secondary transition-colors hover:bg-secondary/10">
       Selengkapnya
     </button>
 

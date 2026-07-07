@@ -39,7 +39,7 @@ const columns = [
 const socials = ['Instagram', 'Facebook', 'WhatsApp', 'TikTok'];
 
 const contacts = [
-  { icon: 'phone', text: '+62 812 3456 7890' },
+  { icon: 'phone', text: '+62 817 0201 984' },
   { icon: 'mail', text: 'halo@garistour.com' },
   { icon: 'pin', text: 'Yogyakarta, Daerah Istimewa Yogyakarta' },
 ];
@@ -120,7 +120,7 @@ const Footer = () => (
                 key={s}
                 href='#'
                 aria-label={s}
-                className='flex h-9 w-9 items-center justify-center rounded-full border border-background/30 text-xs font-semibold text-background/80 transition-colors hover:border-secondary hover:bg-secondary hover:text-tertiary'
+                className='flex h-9 w-9 items-center justify-center rounded-full border border-background/30 text-xs font-semibold text-background/80 transition-all duration-300 hover:-translate-y-1 hover:border-secondary hover:bg-secondary hover:text-tertiary hover:shadow-lg hover:shadow-secondary/30'
               >
                 {s.charAt(0)}
               </a>
@@ -139,8 +139,9 @@ const Footer = () => (
                 <li key={link}>
                   <a
                     href='#'
-                    className='font-body text-sm text-background/70 transition-colors hover:text-background'
+                    className='group inline-flex items-center gap-1 font-body text-sm text-background/70 transition-all duration-200 hover:translate-x-1 hover:text-secondary'
                   >
+                    <span className='h-px w-0 bg-secondary transition-all duration-200 group-hover:w-3' aria-hidden />
                     {link}
                   </a>
                 </li>
