@@ -24,6 +24,7 @@ const WhatsAppFab = () => {
   const reduceMotion = useReducedMotion();
   const [mounted, setMounted] = useState(false);
   const [showBubble, setShowBubble] = useState(false);
+  const [hovered, setHovered] = useState(false);
 
   // Munculkan tombol setelah user scroll sedikit, atau saat halaman sudah tergulir.
   useEffect(() => {
@@ -81,26 +82,31 @@ const WhatsAppFab = () => {
             target='_blank'
             rel='noopener noreferrer'
             aria-label='Chat kami via WhatsApp'
-            onMouseEnter={() => setShowBubble(false)}
-            initial={{ opacity: 0, scale: 0, y: 20 }}
+            onMouseEnter={() => {
+              setShowBubble(false);
+              setHovered(true);
+            }}
+            onMouseLeave={() => setHovered(false)}
+            onFocus={() => setHovered(true)}
+            onBlur={() => setHovered(false)}
+            initial={{ opacity: 0, scale: 0.5, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0, y: 20 }}
-            whileHover={{ scale: 1.06 }}
-            whileTap={{ scale: 0.92 }}
-            transition={{ type: 'spring', stiffness: 380, damping: 18 }}
+            exit={{ opacity: 0, scale: 0.5, y: 20 }}
+            whileTap={{ scale: 0.94 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 24 }}
             className='group pointer-events-auto relative flex items-center'
           >
             {/* Cincin pulsa */}
             {!reduceMotion && (
               <>
                 <motion.span
-                  className='absolute right-0 h-14 w-14 rounded-full bg-[#25D366]'
+                  className='absolute right-0 h-14 w-14 rounded-full bg-[#25D366] will-change-transform'
                   animate={{ scale: [1, 1.9], opacity: [0.45, 0] }}
                   transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
                   aria-hidden
                 />
                 <motion.span
-                  className='absolute right-0 h-14 w-14 rounded-full bg-[#25D366]'
+                  className='absolute right-0 h-14 w-14 rounded-full bg-[#25D366] will-change-transform'
                   animate={{ scale: [1, 1.9], opacity: [0.45, 0] }}
                   transition={{ duration: 2, repeat: Infinity, ease: 'easeOut', delay: 1 }}
                   aria-hidden
@@ -108,13 +114,28 @@ const WhatsAppFab = () => {
               </>
             )}
 
-            {/* Label yang mengembang saat hover (desktop) */}
-            <span className='pointer-events-none mr-[-1.25rem] hidden max-w-0 overflow-hidden whitespace-nowrap rounded-full bg-tertiary py-2.5 pl-4 pr-8 font-body text-sm font-semibold text-background opacity-0 shadow-lg transition-all duration-300 group-hover:max-w-[12rem] group-hover:opacity-100 md:block'>
-              Chat via WhatsApp
-            </span>
+            {/* Label yang mengembang saat hover (desktop): lebar diukur
+                oleh framer-motion (width: 'auto'), bukan trik max-width,
+                supaya gerakannya mulus tanpa lag/snap. */}
+            <AnimatePresence>
+              {hovered && (
+                <motion.span
+                  initial={{ width: 0, opacity: 0 }}
+                  animate={{ width: 'auto', opacity: 1 }}
+                  exit={{ width: 0, opacity: 0 }}
+                  transition={{ duration: 0.28, ease: [0.22, 0.61, 0.36, 1] }}
+                  className='pointer-events-none mr-[-1.25rem] hidden overflow-hidden rounded-full bg-tertiary shadow-lg md:block'
+                  aria-hidden
+                >
+                  <span className='block whitespace-nowrap py-2.5 pl-4 pr-8 font-body text-sm font-semibold text-background'>
+                    Chat via WhatsApp
+                  </span>
+                </motion.span>
+              )}
+            </AnimatePresence>
 
             {/* Bulatan ikon */}
-            <span className='relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#25D366] to-[#128C7E] text-white shadow-lg shadow-[#128C7E]/40 ring-4 ring-white/60'>
+            <span className='relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#25D366] to-[#128C7E] text-white shadow-lg shadow-[#128C7E]/40 ring-4 ring-white/60 transition-transform duration-300 ease-out group-hover:scale-110'>
               <WhatsAppGlyph className='h-7 w-7 drop-shadow-sm' />
 
               {/* Badge notifikasi */}
