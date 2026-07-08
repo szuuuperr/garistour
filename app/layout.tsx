@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Staatliches, DM_Sans } from "next/font/google";
+import SmoothScroll from "@/components/blocks/smooth-scroll";
 import "./globals.css";
 
 const staatliches = Staatliches({
@@ -29,7 +30,10 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${staatliches.variable} ${dmSans.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <SmoothScroll />
+        {children}
+      </body>
     </html>
   );
 }
